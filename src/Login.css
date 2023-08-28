@@ -1,0 +1,24 @@
+body{
+    background-image:url("./bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    padding: 0;
+    background-position: center;
+    background-attachment: fixed;   
+}
+.logBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 100px;
+ margin-left: -500px;
+ margin-right: 480px;
+}
