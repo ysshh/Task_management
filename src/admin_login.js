@@ -20,13 +20,6 @@ import Select from '@mui/material/Select';
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import axios from 'axios';
 import classnames from 'classnames';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 
 const Admin = () => {
   const [data, setData] = useState([]);
@@ -35,11 +28,7 @@ const Admin = () => {
   const [description, setDescription] = useState('');
   const [Priority, setPriority] = useState('');
   const [auser, setAuser] = useState('');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
 
   useEffect(() => {
     fetchTask();
@@ -68,7 +57,7 @@ const Admin = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const createTaskDto = { task_name: task, description: description, priority_level: Priority ,assigned_user: auser, };
+    const createTaskDto = { task_name: task, description: description, priority_level: Priority, assigned_user: auser, };
     const token = localStorage.getItem('token');
     try {
       const response = await axios.post('http://localhost:5000/task/add', createTaskDto, {
@@ -99,16 +88,14 @@ const Admin = () => {
   const handletaskChange = (event) => {
     setTask(event.target.value);
   };
-  
-  
 
   const handleUsers = async (event) => {
-   
+
     try {
       const response = await axios.get('http://localhost:5000/users/get',);
       console.log(response.data);
       if (response.data) {
-        
+
         setUser(response.data);
       } else {
         console.error('Error retrieving user:', response.data.error);
@@ -123,53 +110,12 @@ const Admin = () => {
   };
 
   return (
-    <div>
-    <IconButton
-        color="inherit"
-        aria-label="open sidebar"
-        onClick={toggleSidebar}
-        edge="start"
-      >
-        <MenuIcon />
-      </IconButton>
+    <div style={{ backgroundColor: '#e1e6ff' }} >
 
-
-    <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
-        <List>
-          <ListItem button onClick={handleLogout}>
-            <ListItemText primary="Logout" />
-          </ListItem>
-          <Divider />
-          <ListItem>
-            <FormControl sx={{ m: 1, minWidth: 200 }}>
-              <InputLabel id="sidebar-users-label">Users</InputLabel>
-              <Select
-                labelId="sidebar-users-label"
-                id="sidebar-users-select"
-                value={auser}
-                onClick={handleUsers}
-                onChange={(event) => setAuser(event.target.value)}
-                autoWidth
-                label="Users"
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {users.map((user) => (
-                  <MenuItem key={user._id} value={user._id}>
-                    {user.email}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </ListItem>
-        </List>
-      </Drawer>
-    
       <Grid
         container
         justifyContent="center"
-        backgroundColor= '#357ABD'
+        backgroundColor='#357ABD'
       >
         <Grid item>
           <h1>Task status</h1>
@@ -208,7 +154,7 @@ const Admin = () => {
           required
           margin="normal"
         />
-        
+
 
         <div>
           <FormControl sx={{ m: 1, minWidth: 800 }}>
@@ -239,7 +185,7 @@ const Admin = () => {
               id="demo-simple-select-autowidth"
               value={auser}
               onClick={handleUsers}
-              onChange={(event)=> setAuser(event.target.value)}
+              onChange={(event) => setAuser(event.target.value)}
               autoWidth
               label="Users"
             >
@@ -247,14 +193,10 @@ const Admin = () => {
                 <em>None</em>
               </MenuItem>
               {users.map((user) => (
-               
-                 <MenuItem key={user._id} value={user._id}>
-               
-               <TableCell>{user.email}</TableCell>
-                  
+                <MenuItem key={user._id} value={user._id}>
+
+                  <TableCell>{user.email}</TableCell>
                 </MenuItem>
-               
-              
               ))}
             </Select>
           </FormControl>
@@ -263,7 +205,6 @@ const Admin = () => {
           variant="contained"
           color="secondary"
           onClick={handleSubmit}
-         
         >
           Assign
         </Button>
@@ -303,7 +244,7 @@ const Admin = () => {
 
 
           <TableBody>
-         
+
             {data.map((task) => (
 
               <TableRow
@@ -312,35 +253,37 @@ const Admin = () => {
                   'priority-high': task.priority_level === 'High',
                   'priority-medium': task.priority_level === 'Medium',
                   'priority-low': task.priority_level === 'Low',
-                  overdue: new Date(task.Due_date) < new Date()
+                  
                 })}
               >
                 <TableCell>{task.task_name}</TableCell>
                 <TableCell>{task.description}</TableCell>
-                <TableCell
+                <TableCell><Button
                   style={{
+
                     backgroundColor:
+
                       task.priority_level === 'High'
                         ? 'red'
                         : task.priority_level === 'Medium'
-                        ? 'blue'
-                        : task.priority_level === 'Low'
-                        ? 'green'
-                        : 'inherit',
+                          ? 'blue'
+                          : task.priority_level === 'Low'
+                            ? 'green'
+                            : 'inherit',
                     color:
                       task.priority_level === 'High'
                         ? 'white'
                         : task.priority_level === 'Medium'
-                        ? 'white'
-                        : task.priority_level === 'Low'
-                        ? 'black'
-                        : 'inherit',
+                          ? 'white'
+                          : task.priority_level === 'Low'
+                            ? 'black'
+                            : 'inherit',
                   }}
-                >
-                  {task.priority_level}
+                >{task.priority_level}</Button></TableCell>
+                <TableCell>
+                  
+                  {task.Due_date}
                 </TableCell>
-                <TableCell>{task.Due_date}</TableCell>
-                
                 <TableCell>{task.res.fullName}</TableCell>
               </TableRow>
             ))}

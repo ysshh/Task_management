@@ -8,8 +8,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
-import './Login.css';
-
 
 export default function SignUp() {
     const [fullName, setFullName] = useState('');
@@ -22,8 +20,6 @@ export default function SignUp() {
     const [image, setImage] = useState({ preview: '', raw: '' });
 
     const navigate = useNavigate();
-
-    
 
     const handleChange = (e) => {
         if (e.target.files.length) {
@@ -38,7 +34,7 @@ export default function SignUp() {
             reader.readAsDataURL(selectedImage);
         }
     };
-    
+
 
     const handleUpload = async (e) => {
         e.preventDefault();
@@ -60,15 +56,13 @@ export default function SignUp() {
         event.preventDefault();
 
         if (fullName && phoneNumber && email && password && image.preview) {
-            
+
             if (!phoneNumber || phoneNumber.replace(/[^0-9]/g, '').length !== 10) {
                 setPhoneNumberError(true);
                 return;
             } else {
                 setPhoneNumberError(false);
             }
-
-            
             if (!password || password.length < 8) {
                 setPasswordError(true);
                 return;
@@ -77,7 +71,7 @@ export default function SignUp() {
             }
 
             try {
-                
+
                 let formData = {
                     fullName: fullName,
                     phoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
@@ -88,7 +82,7 @@ export default function SignUp() {
 
                 await axios.post('http://localhost:5000/users/signup', formData);
                 setSignUpSuccess(true);
-                
+
                 console.log('Signup successful');
                 navigate('/');
             } catch (error) {
@@ -106,21 +100,24 @@ export default function SignUp() {
     };
 
     return (
-        <div >
-            <Container component="main" maxWidth="xs">
+        <div className='signup' >
+
+            <Container component="main" maxWidth="xs" >
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         backgroundColor: 'rgba(255, 255, 255, 0.6)',
-                        padding: '20px',
+                        padding: '10px',
                         borderRadius: '8px',
                         boxShadow: 2,
-                        marginLeft:-60,
-                        marginRight:60,
+                        marginLeft: -60,
+                        marginRight: 60,
+                        height: 850,
+                        width: 400,
 
                     }}
                 >
@@ -156,7 +153,7 @@ export default function SignUp() {
                                         onChange={handleChange}
                                     />
                                     <br />
-                                    <button onClick={handleUpload}>Upload</button>
+
                                 </div>
                                 <TextField
                                     autoComplete="name"

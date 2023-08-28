@@ -78,73 +78,77 @@ const Detail = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        taskData ? (
-
-          <Paper elevation={3} style={{ padding: '20px' }}>
-            {editMode ? (
-
-              <form>
-                <div style={{ marginBottom: '10px' }}>
-                  <label>Task Name:</label>
-                  <input
-                    type="text"
-                    value={taskData.task_name}
-                    onChange={(e) => handleInputChange('task_name', e.target.value)}
-                  />
-                </div>
-
-                <div style={{ marginBottom: '10px' }}>
-                  <label>Description:</label>
-                  <textarea
-                    value={taskData.description}
-                    onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}
-                  />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label>Priority Level:</label>
-                  <input
-                    type="text"
-                    value={taskData.priority_level}
-                    onChange={(e) => setTaskData({ ...taskData, priority_level: e.target.value })}
-                  />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label>Due Date:</label>
-                  <input
-                    type="date"
-                    value={taskData.due_date}
-                    onChange={(e) => setTaskData({ ...taskData, due_date: e.target.value })}
-                  />
-                </div>
-
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-
-                  <Button variant="contained" color="primary" onClick={handleSaveClick}>
-                    Save
-                  </Button>
-                </div>
-
-              </form>
-
-            ) : (
-              <>
-                <Typography variant="h5">Task: {taskData.task_name}</Typography>
-                <Typography variant="body1">Description: {taskData.description}</Typography>
-                <Typography variant="body2">Priority: {taskData.priority_level}</Typography>
-                <Typography variant="body2">Due Date: {taskData.Due_date}</Typography>
-
-                <Button variant="outlined" color="primary" onClick={handleEditClick}>Edit</Button>
-              </>
-            )}
-          </Paper>
+    <div className='Detail'>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        {loading ? (
+          <CircularProgress />
         ) : (
-          <Typography variant="body1">Task data not available.</Typography>
-        )
-      )}
+          taskData ? (
+
+            <Paper elevation={3} style={{ padding: '20px' }}>
+              {editMode ? (
+
+                <form >
+                  <div style={{ marginBottom: '10px' }}>
+                    <label>Task Name:</label>
+                    <input
+                      type="text"
+                      value={taskData.task_name}
+                      onChange={(e) => handleInputChange('task_name', e.target.value)}
+                    />
+                  </div>
+
+                  <div style={{ marginBottom: '10px' }}>
+                    <label>Description:</label>
+                    <textarea
+                      value={taskData.description}
+                      onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '10px' }}>
+                    <label>Priority Level:</label>
+                    <input
+                      type="text"
+                      value={taskData.priority_level}
+                      onChange={(e) => setTaskData({ ...taskData, priority_level: e.target.value })}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '10px' }}>
+                    <label>Due Date:</label>
+                    <input
+                      type="date"
+                      value={taskData.due_date}
+                      onChange={(e) => setTaskData({ ...taskData, due_date: e.target.value })}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'center', marginTop: '20px' }}>
+
+                    <Button variant="contained" color="primary" onClick={handleSaveClick}>
+                      Save
+                    </Button><br></br>
+                  <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>go back</Button>
+
+                  </div>
+
+                </form>
+
+              ) : (
+                <div>
+                  <Typography variant="h5">Task: {taskData.task_name}</Typography>
+                  <Typography variant="body1">Description: {taskData.description}</Typography>
+                  <Typography variant="body2">Priority: {taskData.priority_level}</Typography>
+                  <Typography variant="body2">Due Date: {taskData.Due_date}</Typography>
+
+                  <Button variant="outlined" color="primary" onClick={handleEditClick}>Edit</Button><br></br>
+                  <Button variant="outlined" color="secondary" onClick={() => navigate(-1)}>go back</Button>
+                </div>
+              )}
+            </Paper>
+          ) : (
+            <Typography variant="body1">Task data not available.</Typography>
+          )
+        )}
+      </div>
     </div>
   );
 };
